@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+
+.form-group input.ng-invalid.ng-touched, 
+.form-group input.ng-invalid:focus, 
+.form-group select.ng-invalid.ng-touched, 
+.form-group textarea.ng-invalid.ng-touched,
+.form-submit input.ng-invalid,
+.form-submit select.ng-invalid,
+.form-submit  textarea.ng-invalid
+{
+    border-color: #ff4c6a;
+}
+
+.invalid-feedback.form-error {
+    display: block;
+}
