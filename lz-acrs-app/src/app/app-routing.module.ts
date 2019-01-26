@@ -1,34 +1,22 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 
-const appRoutes: Routes = [
-  {
-    path: '', pathMatch: 'full', redirectTo: 'login'
-  },
-  {
-    path: 'login', component: LoginComponent
-  },
-  {
-    path: 'dashboard',
-    children: [
-      {
-        path: '',
-        component: DashboardComponent
-      }]
-  },
-  {
-    path: '**', redirectTo: 'login'
-  }
-];
+import { HeroesComponent }      from './heroes/heroes.component';
+import { DashboardComponent }   from './dashboard/dashboard.component';
+import { HeroDetailComponent }  from './hero-detail/hero-detail.component';
+import {MoreDetailComponent} from './MoreDetail/detail';
+
+  const routes: Routes = [
+    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'detail/:id', component: HeroDetailComponent },
+    //{ path: 'heroes', component: HeroesComponent },
+    {path: 'detail',component: MoreDetailComponent}
+  ];
+
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes, {
-    enableTracing: true, // <-- debugging purposes only
-  })],
-  exports: [
-    RouterModule
-  ]
+  imports: [ RouterModule.forRoot(routes) ],
+  exports: [ RouterModule ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

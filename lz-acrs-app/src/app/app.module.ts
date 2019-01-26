@@ -1,36 +1,36 @@
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule }       from '@angular/core';
+import { BrowserModule }  from '@angular/platform-browser';
+import { FormsModule }    from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { SharedModule } from './shared/shared.module';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { Router, RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DashboardRoutingModule } from './components/dashboard/dashboard-routing.module';
+import { AppComponent }         from './app.component';
+import { DashboardComponent }   from './dashboard/dashboard.component';
+import { HeroDetailComponent }  from './hero-detail/hero-detail.component';
+import { HeroesComponent }      from './heroes/heroes.component';
+import {MoreDetailComponent} from './MoreDetail/detail';
+import {DataTableModule} from "angular-6-datatable";
+
+//import { MessagesComponent }    from './messages/messages.component';
+
+import { AppRoutingModule }     from './app-routing.module';
+import { HttpClientModule }    from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    DashboardComponent,
-  ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
-    HttpModule,
-    NgbModule,
-    ReactiveFormsModule,
-    SharedModule,
-    DashboardRoutingModule,
-    AppRoutingModule,
+    DataTableModule,
+    HttpClientModule,
+    AppRoutingModule
+  ],
+  declarations: [
+    AppComponent,
+    DashboardComponent,
+    HeroesComponent,
+    HeroDetailComponent,
+    MoreDetailComponent
+    //MessagesComponent
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
