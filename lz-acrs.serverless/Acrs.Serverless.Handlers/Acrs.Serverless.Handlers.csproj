@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Acrs.Serverless.Common\Acrs.Serverless.Common.csproj" />
+    <ProjectReference Include="..\Acrs.Serverless.Data\Acrs.Serverless.Data.csproj" />
+    <ProjectReference Include="..\Acrs.Serverless.Dto\Acrs.Serverless.Dto.csproj" />
+    <ProjectReference Include="..\Acrs.Serverless.Models\Acrs.Serverless.Models.csproj" />
+    <ProjectReference Include="..\Acrs.Serverless.Services\Acrs.Serverless.Services.csproj" />
+  </ItemGroup>
+
+</Project>

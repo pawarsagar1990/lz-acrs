@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Acrs.Serverless.Common\Acrs.Serverless.Common.csproj" />
+    <ProjectReference Include="..\Acrs.Serverless.Data\Acrs.Serverless.Data.csproj" />
+    <ProjectReference Include="..\Acrs.Serverless.Models\Acrs.Serverless.Models.csproj" />
+    <ProjectReference Include="..\Acrs.Serverless.Repositories\Acrs.Serverless.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>

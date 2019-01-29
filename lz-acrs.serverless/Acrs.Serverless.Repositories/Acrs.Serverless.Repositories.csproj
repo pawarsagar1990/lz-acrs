@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Acrs.Serverless.Common\Acrs.Serverless.Common.csproj" />
+    <ProjectReference Include="..\Acrs.Serverless.Data\Acrs.Serverless.Data.csproj" />
+    <ProjectReference Include="..\Acrs.Serverless.Models\Acrs.Serverless.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.14.4" />
+  </ItemGroup>
+
+</Project>
