@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Acrs.Serverless.Common\Acrs.Serverless.Common.csproj" />
+    <ProjectReference Include="..\Acrs.Serverless.Models\Acrs.Serverless.Models.csproj" />
   </ItemGroup>
 
 </Project>

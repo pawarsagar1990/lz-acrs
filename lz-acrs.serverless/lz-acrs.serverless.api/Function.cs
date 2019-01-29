@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Acrs.Serverless.Common;
 using Acrs.Serverless.Common.Response;
 using Acrs.Serverless.Handlers.Impl;
-using Acrs.Serverless.Dto; 
+using Acrs.Serverless.Dto;
 
 using Amazon.Lambda.Core;
 using Amazon.Lambda.APIGatewayEvents;
@@ -33,7 +33,7 @@ namespace Acrs.Serverless.Application
         /// </summary>
         /// <param name="request"></param>
         /// <returns>The list of blogs</returns>
-        public override async Task<ApiGatewayResponse> ExecuteAsync(APIGatewayProxyRequest request, ILambdaContext context)
+        public override async Task<APIGatewayProxyResponse> ExecuteAsync(APIGatewayProxyRequest request, ILambdaContext context)
         {
             context.Logger.LogLine("Get Request\n");
 
@@ -41,7 +41,11 @@ namespace Acrs.Serverless.Application
 
             var response = await requestHandler.HandleRequest(this.DeserializeObject<GetConsultationListRequest>(request.Body));
 
-            return response;
+            return new APIGatewayProxyResponse
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = this.SerializeObject(response)
+            };
         }
     }
 }

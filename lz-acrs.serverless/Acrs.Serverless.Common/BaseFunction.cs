@@ -25,10 +25,10 @@ namespace Acrs.Serverless.Common
             _serializer = new JsonSerializer();
         }
 
-        public virtual async Task<ApiGatewayResponse> ExecuteAsync(APIGatewayProxyRequest input, ILambdaContext context)
+        public virtual async Task<APIGatewayProxyResponse> ExecuteAsync(APIGatewayProxyRequest input, ILambdaContext context)
         {
             //context.Logger.Log(SerializeObject(input));
-            var response = new ApiGatewayResponse()
+            var response = new APIGatewayProxyResponse()
             {
                 StatusCode = 200,
                 Body = "success"
@@ -62,7 +62,7 @@ namespace Acrs.Serverless.Common
 
         ~BaseFunction()
         {
-            _logger.LogInformation("Shutting Down...");
+            _logger?.LogInformation("Shutting Down...");
             Dispose(false);
         }
 
@@ -70,7 +70,7 @@ namespace Acrs.Serverless.Common
 
         protected virtual void Dispose(bool disposing)
         {
-            _logger.LogInformation("Shutting Down...");
+            _logger?.LogInformation("Shutting Down...");
             if (!disposedValue)
             {
                 if (disposing)

@@ -21,10 +21,12 @@ namespace Acrs.Serverless.Handlers.Impl
 
         public async override Task<GetConsultationListResponse> HandleRequest(GetConsultationListRequest request)
         {
-            return await Task.FromResult(new GetConsultationListResponse
-            {
+            var consultations = await _consultationService.GetConsultations();
 
-            });
+            return new GetConsultationListResponse
+            {
+                Consultations = consultations
+            };
         }
     }
 }

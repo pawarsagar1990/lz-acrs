@@ -2,9 +2,11 @@
 using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Acrs.Serverless.Repositories.Impl
 {
@@ -22,9 +24,16 @@ namespace Acrs.Serverless.Repositories.Impl
             }
         }
 
-        public IList<Consultation> GetConsultations()
+        public async Task<IList<Consultation>> GetConsultations()
         {
-            return Context
+            var conditions = new List<ScanCondition>();
+
+            return await Context.ScanAsync<Consultation>(conditions).GetRemainingAsync();
+        }
+
+        public async Task<Consultation> GetConsultation(string id)
+        {
+            return await Context.LoadAsync<Consultation>(id);
         }
     }
 }
