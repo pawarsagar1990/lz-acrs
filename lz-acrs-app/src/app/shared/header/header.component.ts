@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
     return 'username : null';
   }
 
-  logout(){
-    this._router.navigate(['/login']); 
+  logout() {
+    this._router.navigate(['/login']);
   }
 }

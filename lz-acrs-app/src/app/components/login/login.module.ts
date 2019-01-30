@@ -1,6 +1,5 @@
 import { LoginComponent } from './login.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ConsultationDetailComponent } from './components/dashboard/consultation-details/consultation-details.component';
 import { DataTableModule } from 'angular-6-datatable';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
