@@ -1,12 +1,13 @@
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
-import { LayoutComponent } from './layout/layout.component';
+import { DashboardComponent } from './dashboard.component';
+import { ConsultationDetailComponent } from './consultation-details/consultation-details.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { DataTableModule } from 'angular-6-datatable';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -16,16 +17,16 @@ import { HttpModule } from '@angular/http';
     HttpModule,
     NgbModule,
     ReactiveFormsModule,
+    DataTableModule,
+    SharedModule
   ],
   declarations: [
-    LayoutComponent,
-    HeaderComponent,
-    FooterComponent
+    DashboardComponent,
+    ConsultationDetailComponent,
   ],
   exports: [
-    LayoutComponent,
-    HeaderComponent,
-    FooterComponent
+    DashboardComponent,
+    ConsultationDetailComponent,
   ]
 })
-export class SharedModule { }
+export class DashboardModule { }

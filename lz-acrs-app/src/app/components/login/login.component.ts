@@ -15,8 +15,8 @@ export class LoginComponent implements OnInit {
     this.model.isValid = true;
     this.model.isSessionExpired = '0';
     this.model.rememberMe = false;
-    this.model.username = "";
-    this.model.password = "";
+    this.model.username = '';
+    this.model.password = '';
   }
 
   ngOnInit() {

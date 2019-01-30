@@ -1,35 +1,6 @@
 <div class="searchbar">
   <input type="text" placeholder="Search..">
 </div>
-<div class="grid grid-pad">
-   <a *ngFor="let hero of heroes" class="col-1-4" 
-      > 
-    <div class="module hero">
-      <h4>{{hero.name}}</h4>
-    </div>
-  </a>
-</div>
-<!-- <div style="text-align:left;width:500px;">
-  <h1>
-      {{ title }}
-  </h1>
-
-  <table *ngIf="arrBirds">
-      
-      <tr>
-          <th>Order#</th>
-              <th>Name of Client</th>
-                  <th>Status</th>
-      </tr>
-
-      
-      <tr *ngFor="let bird of arrBirds">
-          <td>{{bird.ID}}</td>
-              <td>{{bird.Name}}</td>
-                  <td>{{bird.Type}}</td>
-      </tr>
-  </table>
-</div> -->
 
 <table *ngIf="data" class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
   <thead>
@@ -59,7 +30,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let bird of mf.data">
-      <td><nav><a routerLink="/detail">{{bird.ID}}</a></nav><router-outlet></router-outlet></td>
+      <td><nav><a routerLink="/details/{{bird.ID}}">{{bird.ID}}</a></nav><router-outlet></router-outlet></td>
       <td>{{bird.SubmitDate}}</td>
       <td>{{bird.CustomerApptTime}}</td>
       <td>{{bird.State}}</td>
@@ -70,11 +41,4 @@
       <td>{{bird.LegalMatter}}</td>
   </tr>
   </tbody>
-  <!-- <tfoot>
-  <tr>
-      <td>
-          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
-      </td>
-  </tr>
-  </tfoot> -->
 </table>

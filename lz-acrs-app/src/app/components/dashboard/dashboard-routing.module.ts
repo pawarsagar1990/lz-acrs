@@ -1,3 +1,4 @@
+import { ConsultationDetailComponent } from './consultation-details/consultation-details.component';
 import { AuthGuard } from './../../core/auth/auth-guard.service';
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -11,6 +12,15 @@ const dashboardRoutes: Routes = [
         path: '',
         canActivate: [AuthGuard],
         component: DashboardComponent
+      }]
+  },
+  {
+    path: 'detail',
+    children: [
+      {
+        path: '',
+        canActivate: [AuthGuard],
+        component: ConsultationDetailComponent
       }]
   },
 ];
