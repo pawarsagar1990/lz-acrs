@@ -14,7 +14,7 @@ namespace Acrs.Serverless.Services.Impl
 
         public ConsultationService()
         {
-            _consultationRespository = new ConsultationRespository();
+            /// _consultationRespository = new ConsultationRespository();
         }
 
         public async Task<Consultation> GetConsultation(string id)
@@ -24,7 +24,9 @@ namespace Acrs.Serverless.Services.Impl
 
         public async Task<IList<Consultation>> GetConsultations()
         {
-            return await _consultationRespository.GetConsultations();
+            Console.WriteLine($"inside {nameof(ConsultationService)} method {nameof(GetConsultations)}");
+
+            return await Task.FromResult(new List<Consultation> { new Consultation { CustomerFirstName = "Mandar" } });
         }
     }
 }

@@ -2,6 +2,7 @@
 using Acrs.Serverless.Dto;
 using Acrs.Serverless.Services;
 using Acrs.Serverless.Services.Impl;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -21,12 +22,20 @@ namespace Acrs.Serverless.Handlers.Impl
 
         public async override Task<GetConsultationListResponse> HandleRequest(GetConsultationListRequest request)
         {
+            Console.WriteLine($"inside {nameof(GetConsultationRequestHandler)}");
+
             var consultations = await _consultationService.GetConsultations();
 
-            return new GetConsultationListResponse
+            Console.WriteLine($"completed {nameof(GetConsultationRequestHandler)}");
+
+            var response = new GetConsultationListResponse
             {
                 Consultations = consultations
             };
+
+            Console.WriteLine($"completed {JsonConvert.SerializeObject(response)}");
+
+            return response;
         }
     }
 }

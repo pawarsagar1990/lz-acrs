@@ -1,22 +1,126 @@
 {
-  "AWSTemplateFormatVersion" : "2010-09-09",
-  "Transform" : "AWS::Serverless-2016-10-31",
-  "Description" : "An AWS Serverless Application.",
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "An AWS Serverless Application which hosts backend Api's for Xpanxion PoC for Lz-Acrs.",
 
-  "Resources" : {
-
-    "Get" : {
-      "Type" : "AWS::Serverless::Function",
+  "Resources": {
+    "ConsultationApi": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Name": "Consultation Api"
+      }
+    },
+	"ConsultationApiExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": "consultation-api-execution-role",
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "CloudWatchLogsFullAccess",
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
+                    "logs:*"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "arn:aws:logs:*:*:*"
+                }
+              ]
+            }
+          },
+          {
+            "PolicyName": "SNSFullAccess",
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
+                    "sns:*"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*"
+                }
+              ]
+            }
+          },
+          {
+            "PolicyName": "SQSFullAccess",
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
+                    "sqs:*"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*"
+                }
+              ]
+            }
+          },
+          {
+            "PolicyName": "LambdaFullAccess",
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
+                    "lambda:*"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*"
+                }
+              ]
+            }
+          },
+          {
+            "PolicyName": "DynamoDBFullAccess",
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
+                    "dynamodb:*"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ],
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "sts:AssumeRole"
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "GetAllConsultationRequest": {
+      "Type": "AWS::Serverless::Function",
       "Properties": {
         "Handler": "Acrs.Serverless.Application::Acrs.Serverless.Application.GetConsultationsFunction::ExecuteAsync",
         "Runtime": "dotnetcore2.1",
-        "CodeUri": "",
-        "MemorySize": 256,
+        "CodeUri": ".",
+        "Policies": [ "AWSLambdaFullAccess" ], 
+		"MemorySize": 256,
         "Timeout": 30,
-        "Role": null,
-        "Policies": [ "AWSLambdaFullAccess" ],
+		"Role": {
+          "Fn::GetAtt": [
+            "ConsultationApiExecutionRole",
+            "Arn"
+          ]
+        },
         "Events": {
-          "PutResource": {
+          "GetResource": {
             "Type": "Api",
             "Properties": {
               "Path": "/",
@@ -26,13 +130,12 @@
         }
       }
     }
-
   },
 
-  "Outputs" : {
-    "ApiURL" : {
-        "Description" : "API endpoint URL for Prod environment",
-        "Value" : { "Fn::Sub" : "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/" }
+  "Outputs": {
+    "ApiURL": {
+      "Description": "API endpoint URL for Prod environment",
+      "Value": { "Fn::Sub": "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/" }
     }
   }
 }

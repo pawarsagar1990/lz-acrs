@@ -4,6 +4,7 @@ using Amazon.Lambda.Core;
 using Amazon.Lambda.Serialization.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.IO;
@@ -15,14 +16,13 @@ namespace Acrs.Serverless.Common
     public class BaseFunction : IDisposable
     {
         protected static IConfigurationRoot _configuration;
-        private static JsonSerializer _serializer;
 
         protected ILogger _logger = null;
 
 
         public BaseFunction()
         {
-            _serializer = new JsonSerializer();
+
         }
 
         public virtual async Task<APIGatewayProxyResponse> ExecuteAsync(APIGatewayProxyRequest input, ILambdaContext context)
@@ -55,14 +55,14 @@ namespace Acrs.Serverless.Common
 
         public virtual async Task<ApiGatewayResponse> FunctionHandler(string message, ILambdaContext context)
         {
-            _logger?.LogInformation("Message: {@request}", message);
+            //_logger?.LogInformation("Message: {@request}", message);
 
             return await Task.FromResult(new ApiGatewayResponse() { Body = "success" });
         }
 
         ~BaseFunction()
         {
-            _logger?.LogInformation("Shutting Down...");
+            //_logger?.LogInformation("Shutting Down...");
             Dispose(false);
         }
 
@@ -70,7 +70,7 @@ namespace Acrs.Serverless.Common
 
         protected virtual void Dispose(bool disposing)
         {
-            _logger?.LogInformation("Shutting Down...");
+            //_logger?.LogInformation("Shutting Down...");
             if (!disposedValue)
             {
                 if (disposing)
@@ -90,19 +90,12 @@ namespace Acrs.Serverless.Common
 
         protected string SerializeObject<T>(T objectToSerialize)
         {
-            using (var ms = new MemoryStream())
-            {
-                _serializer.Serialize(objectToSerialize, ms);
-                return Encoding.UTF8.GetString(ms.ToArray());
-            }
+            return JsonConvert.SerializeObject(objectToSerialize);
         }
 
         protected T DeserializeObject<T>(string serializedObject)
         {
-            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(serializedObject)))
-            {
-                return _serializer.Deserialize<T>(ms);
-            }
+            return JsonConvert.DeserializeObject<T>(serializedObject);
         }
     }
 }
