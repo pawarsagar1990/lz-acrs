@@ -22,7 +22,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
     ],
     exports: [
         LoginComponent
-    ]
+    ],
   providers: [],
 })
 export class LoginModule { }

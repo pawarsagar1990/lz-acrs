@@ -13,9 +13,9 @@ export class DashboardComponent implements OnInit {
   constructor(private httpService: HttpClient) { }
 
   ngOnInit() {
-    this.httpService.get('./assets/ConsultationData.json').subscribe(
-      data => {
-        this.data = data as any;	 // FILL THE ARRAY WITH DATA.
+    this.httpService.get('https://vjdwzivth7.execute-api.us-west-2.amazonaws.com/Stage/consultation/505045382').subscribe(
+      result => {
+        this.data = result as any;	 // FILL THE ARRAY WITH DATA.
       },
       (err: HttpErrorResponse) => {
         console.log(err.message);
