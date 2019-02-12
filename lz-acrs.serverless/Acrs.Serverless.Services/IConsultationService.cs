@@ -9,6 +9,6 @@ namespace Acrs.Serverless.Services
     {
         Task<IList<Consultation>> GetConsultations();
 
-        Task<Consultation> GetConsultation(string id);
+        Task<Consultation> GetConsultation(string orderNumber);
     }
 }

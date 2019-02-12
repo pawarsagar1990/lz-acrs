@@ -1,9 +1,9 @@
-﻿using Acrs.Serverless.Common.Response;
+﻿using Acrs.Serverless.Common.Logging;
+using Acrs.Serverless.Common.Response;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.Serialization.Json;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
@@ -22,12 +22,12 @@ namespace Acrs.Serverless.Common
 
         public BaseFunction()
         {
-
+            _logger = LogFactory.GetLogger();
         }
 
         public virtual async Task<APIGatewayProxyResponse> ExecuteAsync(APIGatewayProxyRequest input, ILambdaContext context)
         {
-            //context.Logger.Log(SerializeObject(input));
+            _logger.LogInformation(SerializeObject(input));
             var response = new APIGatewayProxyResponse()
             {
                 StatusCode = 200,
@@ -55,14 +55,14 @@ namespace Acrs.Serverless.Common
 
         public virtual async Task<ApiGatewayResponse> FunctionHandler(string message, ILambdaContext context)
         {
-            //_logger?.LogInformation("Message: {@request}", message);
+            _logger.LogInformation("Message: {@request}", message);
 
             return await Task.FromResult(new ApiGatewayResponse() { Body = "success" });
         }
 
         ~BaseFunction()
         {
-            //_logger?.LogInformation("Shutting Down...");
+            _logger.LogInformation("Shutting Down...");
             Dispose(false);
         }
 
@@ -70,7 +70,7 @@ namespace Acrs.Serverless.Common
 
         protected virtual void Dispose(bool disposing)
         {
-            //_logger?.LogInformation("Shutting Down...");
+            _logger?.LogInformation("disposing...");
             if (!disposedValue)
             {
                 if (disposing)

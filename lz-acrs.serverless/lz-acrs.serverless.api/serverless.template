@@ -4,12 +4,6 @@
   "Description": "An AWS Serverless Application which hosts backend Api's for Xpanxion PoC for Lz-Acrs.",
 
   "Resources": {
-    "ConsultationApi": {
-      "Type": "AWS::ApiGateway::RestApi",
-      "Properties": {
-        "Name": "Consultation Api"
-      }
-    },
 	"ConsultationApiExecutionRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -109,7 +103,7 @@
       "Properties": {
         "Handler": "Acrs.Serverless.Application::Acrs.Serverless.Application.GetConsultationsFunction::ExecuteAsync",
         "Runtime": "dotnetcore2.1",
-        "CodeUri": ".",
+        "CodeUri": "",
         "Policies": [ "AWSLambdaFullAccess" ], 
 		"MemorySize": 256,
         "Timeout": 30,
@@ -123,13 +117,61 @@
           "GetResource": {
             "Type": "Api",
             "Properties": {
-              "Path": "/",
+              "Path": "/consultations",
               "Method": "GET"
             }
           }
         }
       }
-    }
+    },
+    "GetConsultationByIdRequest": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "Acrs.Serverless.Application::Acrs.Serverless.Application.GetConsultationByIdFunction::ExecuteAsync",
+        "Runtime": "dotnetcore2.1",
+        "CodeUri": "",
+        "Policies": [ "AWSLambdaFullAccess" ], 
+		"MemorySize": 256,
+        "Timeout": 30,
+		"Role": {
+          "Fn::GetAtt": [
+            "ConsultationApiExecutionRole",
+            "Arn"
+          ]
+        },
+        "Events": {
+          "PutResource": {
+            "Type": "Api",
+            "Properties": {
+				"Path":"/consultation/{orderNumber}", 
+				"Method": "GET"
+            }
+          }
+        }
+      }
+    },
+	"ConsultationTable" : {
+		"Type" : "AWS::DynamoDB::Table",
+		"Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "OrderNumber",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "OrderNumber",
+            "KeyType": "HASH"
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "5",
+          "WriteCapacityUnits": "5"
+        },
+        "TableName": "Consultation"
+      }
+	}
   },
 
   "Outputs": {

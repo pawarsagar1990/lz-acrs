@@ -5,9 +5,9 @@ namespace Acrs.Serverless.Models
     public class Consultation
     {
         public string OrderNumber { get; set; }
-        public DateTime SubmitDateUtc { get; set; }
-        public DateTime? FirmAppointmentDate { get; set; }
-        public DateTime CustomerAppointmentDate { get; set; }
+        public string SubmitDateUtc { get; set; }
+        public string FirmAppointmentDate { get; set; }
+        public string CustomerAppointmentDate { get; set; }
         public string State { get; set; }
         public string Status { get; set; }
 

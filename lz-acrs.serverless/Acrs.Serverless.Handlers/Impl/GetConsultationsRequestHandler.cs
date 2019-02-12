@@ -1,4 +1,5 @@
 ﻿using Acrs.Serverless.Common.Handlers;
+using Acrs.Serverless.Common.Logging;
 using Acrs.Serverless.Dto;
 using Acrs.Serverless.Services;
 using Acrs.Serverless.Services.Impl;
@@ -11,29 +12,31 @@ using System.Threading.Tasks;
 
 namespace Acrs.Serverless.Handlers.Impl
 {
-    public class GetConsultationRequestHandler : RequestHandler<GetConsultationListResponse, GetConsultationListRequest>
+    public class GetConsultationsRequestHandler : RequestHandler<GetConsultationListResponse, GetConsultationListRequest>
     {
         private readonly IConsultationService _consultationService;
+        private readonly ILogger _logger;
 
-        public GetConsultationRequestHandler()
+        public GetConsultationsRequestHandler()
         {
             _consultationService = new ConsultationService();
+            _logger = LogFactory.GetLogger();
         }
 
         public async override Task<GetConsultationListResponse> HandleRequest(GetConsultationListRequest request)
         {
-            Console.WriteLine($"inside {nameof(GetConsultationRequestHandler)}");
+            _logger.LogInformation($"inside {nameof(GetConsultationsRequestHandler)}");
 
             var consultations = await _consultationService.GetConsultations();
-
-            Console.WriteLine($"completed {nameof(GetConsultationRequestHandler)}");
 
             var response = new GetConsultationListResponse
             {
                 Consultations = consultations
             };
 
-            Console.WriteLine($"completed {JsonConvert.SerializeObject(response)}");
+            _logger.LogInformation($"retrived {consultations.Count} records");
+
+            _logger.LogInformation($"completed {nameof(GetConsultationsRequestHandler)}");
 
             return response;
         }

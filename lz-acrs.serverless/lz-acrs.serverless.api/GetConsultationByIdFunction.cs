@@ -13,19 +13,16 @@ using Amazon.Lambda.Core;
 using Amazon.Lambda.APIGatewayEvents;
 using Newtonsoft.Json;
 
-// Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
-[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
-
 namespace Acrs.Serverless.Application
 {
-    public class GetConsultationsFunction : BaseFunction
+    public class GetConsultationByIdFunction : BaseFunction
     {
         /// <summary>
         /// Default constructor that Lambda will invoke.
         /// </summary>
-        public GetConsultationsFunction() : base()
+        public GetConsultationByIdFunction() : base()
         {
-            
+
         }
 
 
@@ -38,11 +35,14 @@ namespace Acrs.Serverless.Application
         {
             try
             {
-                _logger.LogInformation($"recieved request {request.Body}");
+                var getByIdRequest = new GetConsultationByIdRequest
+                {
+                    OrderNumber = request.PathParameters["orderNumber"]
+                };
 
-                var requestHandler = new GetConsultationsRequestHandler();
+                var requestHandler = new GetConsultationByIdRequestHandler();
 
-                var response = await requestHandler.HandleRequest(null);
+                var response = await requestHandler.HandleRequest(getByIdRequest);
 
                 Console.WriteLine($"recieved response {JsonConvert.SerializeObject(response)}");
 
