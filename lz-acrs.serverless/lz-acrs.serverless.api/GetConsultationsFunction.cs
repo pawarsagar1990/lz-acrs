@@ -25,7 +25,7 @@ namespace Acrs.Serverless.Application
         /// </summary>
         public GetConsultationsFunction() : base()
         {
-            
+
         }
 
 
@@ -44,23 +44,20 @@ namespace Acrs.Serverless.Application
 
                 var response = await requestHandler.HandleRequest(null);
 
-                Console.WriteLine($"recieved response {JsonConvert.SerializeObject(response)}");
-
-                return new APIGatewayProxyResponse
+                if (response != null)
                 {
-                    StatusCode = (int)HttpStatusCode.OK,
-                    Body = JsonConvert.SerializeObject(response),
-                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
-                };
+                    Console.WriteLine($"recieved response {JsonConvert.SerializeObject(response)}");
 
+                    return CreateResponse(HttpStatusCode.OK, response);
+                }
+                else
+                {
+                    return CreateResponse(HttpStatusCode.NotFound, null);
+                }
             }
             catch (Exception ex)
             {
-                return new APIGatewayProxyResponse
-                {
-                    StatusCode = (int)HttpStatusCode.InternalServerError,
-                    Body = JsonConvert.SerializeObject(ex)
-                };
+                return CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
 
         }

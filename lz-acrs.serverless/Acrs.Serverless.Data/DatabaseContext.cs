@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Acrs.Serverless.Application
+namespace Acrs.Serverless.Data
 {
-    class LambdaEntryPoint
+    public class DatabaseContext : IDatabaseContext
     {
+
     }
 }

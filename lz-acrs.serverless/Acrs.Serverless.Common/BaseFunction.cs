@@ -7,7 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,11 +55,11 @@ namespace Acrs.Serverless.Common
             return response;
         }
 
-        public virtual async Task<ApiGatewayResponse> FunctionHandler(string message, ILambdaContext context)
+        public virtual async Task<APIGatewayProxyResponse> FunctionHandler(string message, ILambdaContext context)
         {
             _logger.LogInformation("Message: {@request}", message);
 
-            return await Task.FromResult(new ApiGatewayResponse() { Body = "success" });
+            return await Task.FromResult(new APIGatewayProxyResponse() { Body = "success" });
         }
 
         ~BaseFunction()
@@ -96,6 +98,24 @@ namespace Acrs.Serverless.Common
         protected T DeserializeObject<T>(string serializedObject)
         {
             return JsonConvert.DeserializeObject<T>(serializedObject);
+        }
+
+        public APIGatewayProxyResponse CreateResponse(HttpStatusCode statusCode, object response)
+        {
+            return CreateResponse(statusCode, response, null);
+        }
+
+        public APIGatewayProxyResponse CreateResponse(HttpStatusCode statusCode, object response, IDictionary<string, string> headers)
+        {
+            headers = headers ?? new Dictionary<string, string>();
+            headers.Add(new KeyValuePair<string, string>("Content-Type", "application/json"));
+
+            return new APIGatewayProxyResponse
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = SerializeObject(response ?? new object()),
+                Headers = headers
+            };
         }
     }
 }
